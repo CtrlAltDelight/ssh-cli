@@ -61,8 +61,25 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	// get hostnames.txt
+	char hostnames_filepath[200];
+	char* homedir = getenv("HOME");
+	fputs(homedir, stdout);
+	if(homedir == NULL) {
+		printf("Cannot get home directory path.\n");
+		return EXIT_FAILURE;
+	}
+	strcpy(hostnames_filepath, homedir);
+	strcat(hostnames_filepath, "/.config/sshcli/hostnames.txt");
+	FILE* hostnames_file = fopen(hostnames_filepath, "r");
+	if(hostnames_file == NULL) {
+		printf("Cannot get home directory path.\n");
+		return EXIT_FAILURE;
+	}
+	fputs(hostnames_filepath, stdout);
+
+	// get hostname
 	char hostname[MAX_LINE_SIZE];
-	FILE* hostnames_file = fopen("hostnames.txt", "r");
 	for(int i = 0; fgets(hostname, sizeof hostname, hostnames_file) != NULL && i < host_idx; i++);
 	char ssh_command[MAX_LINE_SIZE];
 	strcpy(ssh_command, "ssh ");
