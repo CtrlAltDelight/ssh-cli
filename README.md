@@ -1,6 +1,11 @@
 # ssh-cli
 So I don't have to type the hostnames out whenever I want to ssh, I'm making a simple cli to help me quickly navigate ssh hosts.
 
+## Instructions
+Clone this repository, change hostnames.txt to be whichever hostnames you want to use. (hostname0 is default)
+Use "make" and the executable will be created.
+Run the executable to use the default hostname (hostname0), or specify a hostname with -n NUM (AKA --host_name NUM)
+
 ## Notes
 I found this website very helpful: https://azrael.digipen.edu/~mmead/www/Courses/CS180/getopt.html
 This is my first time using getopt in a C program, so I will compile some notes here.
