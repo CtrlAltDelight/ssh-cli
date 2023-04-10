@@ -10,8 +10,11 @@
 
 static void _print_help() {
 	printf("usage: sshcli [-h] [-n [HOST_NUM]]\n");
-	printf("required arguments: -n [HOST_NUM], --host_num [HOST_NUM]     the line number in hostnames_file.txt for the desired hostname\n");
-	printf("optional arguments: -h, --help     show this help message and exit\n");
+	printf("Note: if not HOST_NUM specified, HOST_NUM is 0\n");
+	printf("\n");
+	printf("optional arguments:\n");
+	printf("-n [HOST_NUM], --host_num [HOST_NUM]     the line number in hostnames_file.txt for the desired hostname\n");
+	printf("-h, --help     show this help message and exit\n");
 	printf("\n");
 }
 
@@ -20,6 +23,7 @@ int main(int argc, char* argv[]) {
 	int host_idx = -1; // should change when option is given TODO: make this into a required argument or find better method of getting the hostname.
 
 	// Get options
+	// TODO: Add a way to edit hostnames_file on the command line.
 	int c;
 	while(1) {
 		int option_index = 0;
@@ -29,7 +33,7 @@ int main(int argc, char* argv[]) {
 		};
 
 		c = getopt_long(argc, argv, "hn:", long_opts, &option_index);
-		printf("c == %d\n", c);
+		//printf("c == %d\n", c);
 
 		if(c == -1) {
 			break;
@@ -52,16 +56,19 @@ int main(int argc, char* argv[]) {
 			case 'h':
 				_print_help();
 				return EXIT_SUCCESS;
-				break;
 			default:
 				printf("?? getopt returnded character code 0%o ??\n", c);
 		}
 	}
 
-	char line[MAX_LINE_SIZE];
+	char hostname[MAX_LINE_SIZE];
 	FILE* hostnames_file = fopen("hostnames.txt", "r");
-	for(int i = 0; fgets(line, sizeof line, hostnames_file) != NULL && i < host_idx; i++);
-	printf(line);
+	for(int i = 0; fgets(hostname, sizeof hostname, hostnames_file) != NULL && i < host_idx; i++);
+	char ssh_command[MAX_LINE_SIZE];
+	strcpy(ssh_command, "ssh ");
+	strcat(ssh_command, hostname);
+	fputs(ssh_command, stdout);
+	system(ssh_command);
 
 	return EXIT_SUCCESS;
 }
