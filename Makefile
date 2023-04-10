@@ -1,8 +1,7 @@
-BASE_NAME=interface
+BASE_NAME=sshcli
 SRC_C=$(BASE_NAME).c
 SRC_H=$(BASE_NAME).h
-EXECUTABLE=test_$(BASE_NAME)
-TEST_C=$(EXECUTABLE).c
+EXECUTABLE=$(BASE_NAME)
 CFLAGS=-g -std=c11 -Wall -Wshadow -Wvla -Werror -pedantic -std=c11
 
 $(EXECUTABLE): $(SRC_C)
