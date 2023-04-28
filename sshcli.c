@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	// Get options
 	// TODO: Add a way to edit hostnames_file on the command line.
 	int c;
-	while(1) {
+	while(true) {
 		int option_index = 0;
 		static struct option long_opts[] = {
 			{ .name = "host_num", .has_arg = required_argument, .flag = NULL, .val = 'n' },
@@ -64,16 +64,16 @@ int main(int argc, char* argv[]) {
 	// get hostnames.txt
 	char hostnames_filepath[200];
 	char* homedir = getenv("HOME");
-	fputs(homedir, stdout);
 	if(homedir == NULL) {
 		printf("Cannot get home directory path.\n");
 		return EXIT_FAILURE;
 	}
+	fputs(homedir, stdout);
 	strcpy(hostnames_filepath, homedir);
 	strcat(hostnames_filepath, "/.config/sshcli/hostnames.txt");
 	FILE* hostnames_file = fopen(hostnames_filepath, "r");
 	if(hostnames_file == NULL) {
-		printf("Cannot get home directory path.\n");
+		printf("Cannot get hostnames.txt directory path.\n");
 		return EXIT_FAILURE;
 	}
 	fputs(hostnames_filepath, stdout);
